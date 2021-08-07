@@ -1,6 +1,6 @@
 #!/bin/sh
 #Set Variable to master is not set differently
-LVBRANCH="${LVBRANCH:-master}"
+LVBRANCH="${LVBRANCH:-rolling}"
 USER_BIN_DIR="/usr/local/bin"
 set -o nounset # error when referencing undefined variable
 set -o errexit # exit when command fails
@@ -133,11 +133,11 @@ cloneconfig() {
 	sudo chmod a+rx "$USER_BIN_DIR"/lvim
 	cp "$HOME/.local/share/lunarvim/lvim/utils/installer/config.example-no-ts.lua" "$HOME/.config/lvim/config.lua"
 
-	nvim -u ~/.local/share/lunarvim/lvim/init.lua --cmd "set runtimepath+=~/.local/share/lunarvim/lvim" --headless \
+	~/.local/neovim/bin/nvim -u ~/.local/share/lunarvim/lvim/init.lua --cmd "set runtimepath+=~/.local/share/lunarvim/lvim" --headless \
 		+'autocmd User PackerComplete sleep 100m | qall' \
 		+PackerInstall
 
-	nvim -u ~/.local/share/lunarvim/lvim/init.lua --cmd "set runtimepath+=~/.local/share/lunarvim/lvim" --headless \
+	~/.local/neovim/bin/nvim -u ~/.local/share/lunarvim/lvim/init.lua --cmd "set runtimepath+=~/.local/share/lunarvim/lvim" --headless \
 		+'autocmd User PackerComplete sleep 100m | qall' \
 		+PackerSync
 
