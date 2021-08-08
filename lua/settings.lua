@@ -2,6 +2,7 @@ local M = {}
 
 M.load_options = function()
   local opt = vim.opt
+  local g = vim.g
 
   local default_options = {
     backup = false, -- creates a backup file
@@ -39,7 +40,7 @@ M.load_options = function()
     tabstop = 2, -- insert 2 spaces for a tab
     cursorline = true, -- highlight the current line
     number = true, -- set numbered lines
-    relativenumber = false, -- set relative numbered lines
+    relativenumber = true, -- set relative numbered lines
     numberwidth = 4, -- set number column width to 2 {default 4}
     signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
     wrap = false, -- display lines as one long line
@@ -52,6 +53,10 @@ M.load_options = function()
   ---  SETTINGS  ---
 
   opt.shortmess:append "c"
+  g.python_host_skip_check=1
+  g.python3_host_skip_check=1
+  g.loaded_python_provider=0
+  g.python3_host_prog = '/usr/bin/python3'
 
   for k, v in pairs(default_options) do
     vim.opt[k] = v
