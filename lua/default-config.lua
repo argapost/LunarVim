@@ -74,10 +74,7 @@ lvim = {
           { name = "LspDiagnosticsSignInformation", text = "" },
         },
       },
-      virtual_text = {
-        prefix = "",
-        spacing = 0,
-      },
+      virtual_text = { prefix = "", spacing = 0 },
       underline = true,
       severity_sort = true,
     },
@@ -119,10 +116,7 @@ lvim.lang = {
       },
     },
     linters = {},
-    lsp = {
-      provider = "",
-      setup = {},
-    },
+    lsp = { provider = "", setup = {} },
   },
   beancount = {
     formatters = {
@@ -263,10 +257,7 @@ lvim.lang = {
     },
   },
   clojure = {
-    formatters = { {
-      exe = "",
-      args = {},
-    } },
+    formatters = { { exe = "", args = {} } },
     linters = {},
     lsp = {
       provider = "clojure_lsp",
@@ -372,10 +363,7 @@ lvim.lang = {
   },
   docker = {
     formatters = {
-      {
-        exe = "",
-        args = {},
-      },
+      { exe = "", args = {} },
       -- @usage can be {"hadolint"}
     },
     linters = {},
@@ -453,9 +441,7 @@ lvim.lang = {
     lsp = {
       provider = "erlangls",
       setup = {
-        cmd = {
-          "erlang_ls",
-        },
+        cmd = { "erlang_ls" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -487,9 +473,7 @@ lvim.lang = {
     lsp = {
       provider = "fortls",
       setup = {
-        cmd = {
-          DATA_PATH .. "/lspinstall/fortran/venv/bin/fortls",
-        },
+        cmd = { DATA_PATH .. "/lspinstall/fortran/venv/bin/fortls" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -509,9 +493,7 @@ lvim.lang = {
     lsp = {
       provider = "gopls",
       setup = {
-        cmd = {
-          DATA_PATH .. "/lspinstall/go/gopls",
-        },
+        cmd = { DATA_PATH .. "/lspinstall/go/gopls" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -519,20 +501,12 @@ lvim.lang = {
     },
   },
   graphql = {
-    formatters = { {
-      exe = "",
-      args = {},
-    } },
+    formatters = { { exe = "", args = {} } },
     linters = {},
     lsp = {
       provider = "graphql",
       setup = {
-        cmd = {
-          "graphql-lsp",
-          "server",
-          "-m",
-          "stream",
-        },
+        cmd = { "graphql-lsp", "server", "-m", "stream" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -540,10 +514,7 @@ lvim.lang = {
     },
   },
   haskell = {
-    formatters = { {
-      exe = "",
-      args = {},
-    } },
+    formatters = { { exe = "", args = {} } },
     linters = {},
     lsp = {
       provider = "hls",
@@ -640,10 +611,7 @@ lvim.lang = {
     },
   },
   julia = {
-    formatters = { {
-      exe = "",
-      args = {},
-    } },
+    formatters = { { exe = "", args = {} } },
     linters = {},
     lsp = {
       provider = "julials",
@@ -662,10 +630,7 @@ lvim.lang = {
     },
   },
   kotlin = {
-    formatters = { {
-      exe = "",
-      args = {},
-    } },
+    formatters = { { exe = "", args = {} } },
     linters = {},
     lsp = {
       provider = "kotlin_language_server",
@@ -698,7 +663,7 @@ lvim.lang = {
     formatters = {
       {
         -- @usage can be stylua or lua_format
-        exe = "",
+        exe = "stylua",
         args = {},
       },
     },
@@ -746,10 +711,7 @@ lvim.lang = {
       {
         -- @usage can be nginx_beautifier
         exe = "",
-        args = {
-          provider = "",
-          setup = {},
-        },
+        args = { provider = "", setup = {} },
       },
     },
     linters = {},
@@ -764,10 +726,7 @@ lvim.lang = {
       },
     },
     linters = {},
-    lsp = {
-      provider = "",
-      setup = {},
-    },
+    lsp = { provider = "", setup = {} },
   },
   sql = {
     formatters = {
@@ -778,12 +737,7 @@ lvim.lang = {
       },
     },
     linters = {},
-    lsp = {
-      provider = "sqls",
-      setup = {
-        cmd = { "sqls" },
-      },
-    },
+    lsp = { provider = "sqls", setup = { cmd = { "sqls" } } },
   },
   php = {
     formatters = {
@@ -804,21 +758,12 @@ lvim.lang = {
         on_attach = common_on_attach,
         on_init = common_on_init,
         filetypes = { "php", "phtml" },
-        settings = {
-          intelephense = {
-            environment = {
-              phpVersion = "7.4",
-            },
-          },
-        },
+        settings = { intelephense = { environment = { phpVersion = "7.4" } } },
       },
     },
   },
   puppet = {
-    formatters = { {
-      exe = "",
-      args = {},
-    } },
+    formatters = { { exe = "", args = {} } },
     linters = {},
     lsp = {
       provider = "puppet",
@@ -831,12 +776,7 @@ lvim.lang = {
   },
   javascript = {
     -- @usage can be prettier or prettier_d_slim or prettierd
-    formatters = {
-      {
-        exe = "",
-        args = {},
-      },
-    },
+    formatters = { { exe = "", args = {} } },
     -- @usage can be {"eslint"} or {"eslint_d"}
     linters = {},
     lsp = {
@@ -913,12 +853,7 @@ lvim.lang = {
     lsp = {
       provider = "r_language_server",
       setup = {
-        cmd = {
-          "R",
-          "--slave",
-          "-e",
-          "languageserver::run()",
-        },
+        cmd = { "R", "--slave", "-e", "languageserver::run()" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -945,18 +880,12 @@ lvim.lang = {
         on_init = common_on_init,
         capabilities = common_capabilities,
         filetypes = { "ruby" },
-        init_options = {
-          formatting = true,
-        },
+        init_options = { formatting = true },
         root_dir = function(fname)
           local util = require("lspconfig").util
           return util.root_pattern("Gemfile", ".git")(fname)
         end,
-        settings = {
-          solargraph = {
-            diagnostics = true,
-          },
-        },
+        settings = { solargraph = { diagnostics = true } },
       },
     },
   },
@@ -972,9 +901,7 @@ lvim.lang = {
     lsp = {
       provider = "rust_analyzer",
       setup = {
-        cmd = {
-          DATA_PATH .. "/lspinstall/rust/rust-analyzer",
-        },
+        cmd = { DATA_PATH .. "/lspinstall/rust/rust-analyzer" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -1022,10 +949,7 @@ lvim.lang = {
     },
   },
   svelte = {
-    formatters = { {
-      exe = "",
-      args = {},
-    } },
+    formatters = { { exe = "", args = {} } },
     linters = {},
     lsp = {
       provider = "svelte",
@@ -1052,10 +976,7 @@ lvim.lang = {
     lsp = {
       provider = "sourcekit",
       setup = {
-        cmd = {
-          "xcrun",
-          "sourcekit-lsp",
-        },
+        cmd = { "xcrun", "sourcekit-lsp" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -1098,11 +1019,7 @@ lvim.lang = {
   },
   tex = {
     formatters = {
-      {
-        exe = "",
-        args = {},
-        stdin = false,
-      },
+      { exe = "", args = {}, stdin = false },
       -- @usage can be chktex or vale
     },
     linters = {},
@@ -1165,12 +1082,7 @@ lvim.lang = {
     },
   },
   vim = {
-    formatters = {
-      {
-        exe = "",
-        args = {},
-      },
-    },
+    formatters = { { exe = "", args = {} } },
     -- @usage can be {"vint"}
     linters = { "" },
     lsp = {
@@ -1199,9 +1111,7 @@ lvim.lang = {
     lsp = {
       provider = "vuels",
       setup = {
-        cmd = {
-          DATA_PATH .. "/lspinstall/vue/node_modules/.bin/vls",
-        },
+        cmd = { DATA_PATH .. "/lspinstall/vue/node_modules/.bin/vls" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -1231,18 +1141,12 @@ lvim.lang = {
     },
   },
   zig = {
-    formatters = { {
-      exe = "",
-      args = {},
-      stdin = false,
-    } },
+    formatters = { { exe = "", args = {}, stdin = false } },
     linters = {},
     lsp = {
       provider = "zls",
       setup = {
-        cmd = {
-          "zls",
-        },
+        cmd = { "zls" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -1255,11 +1159,7 @@ lvim.lang = {
     lsp = {
       provider = "gdscript",
       setup = {
-        cmd = {
-          "nc",
-          "localhost",
-          "6008",
-        },
+        cmd = { "nc", "localhost", "6008" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
