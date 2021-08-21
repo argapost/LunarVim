@@ -12,10 +12,7 @@ M.config = function()
 end
 
 M.setup = function()
-  local status_ok, dap = pcall(require, "dap")
-  if not status_ok then
-    return
-  end
+  local dap = require "dap"
 
   vim.fn.sign_define("DapBreakpoint", lvim.builtin.dap.breakpoint)
   dap.defaults.fallback.terminal_win_cmd = "50vsplit new"

@@ -1,7 +1,8 @@
 local M = {}
 M.config = function()
   lvim.builtin.which_key = {
-    active = false,
+    ---@usage disable which-key completely [not recommeded]
+    active = true,
     setup = {
       plugins = {
         marks = true, -- shows a list of your marks on ' and `
@@ -65,9 +66,8 @@ M.config = function()
       ["q"] = { "<cmd>q!<CR>", "Quit" },
       ["/"] = { "<cmd>CommentToggle<CR>", "Comment" },
       ["c"] = { "<cmd>BufferClose!<CR>", "Close Buffer" },
-      ["e"] = { "<cmd>lua require'core.nvimtree'.toggle_tree()<CR>", "Explorer" },
       ["f"] = { "<cmd>Telescope find_files<CR>", "Find File" },
-      ["h"] = { '<cmd>let @/=""<CR>', "No Highlight" },
+      ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
       b = {
         name = "Buffers",
         j = { "<cmd>BufferPick<cr>", "jump to buffer" },
@@ -168,13 +168,41 @@ M.config = function()
       },
       L = {
         name = "+LunarVim",
+        c = {
+          "<cmd>edit ~/.config/lvim/config.lua<cr>",
+          "Edit config.lua",
+        },
+        f = {
+          "<cmd>lua require('core.telescope').find_lunarvim_files()<cr>",
+          "Find LunarVim files",
+        },
+        g = {
+          "<cmd>lua require('core.telescope').grep_lunarvim_files()<cr>",
+          "Grep LunarVim files",
+        },
         k = { "<cmd>lua require('keymappings').print()<cr>", "View LunarVim's default keymappings" },
         i = {
           "<cmd>lua require('core.info').toggle_popup(vim.bo.filetype)<cr>",
           "Toggle LunarVim Info",
         },
+        l = {
+          name = "+logs",
+          d = {
+            "<cmd>lua require('core.terminal').toggle_log_view('lunarvim')<cr>",
+            "view default log",
+          },
+          D = { "<cmd>edit ~/.cache/nvim/lunarvim.log<cr>", "Open the default logfile" },
+          n = { "<cmd>lua require('core.terminal').toggle_log_view('lsp')<cr>", "view lsp log" },
+          N = { "<cmd>edit ~/.cache/nvim/log<cr>", "Open the Neovim logfile" },
+          l = { "<cmd>lua require('core.terminal').toggle_log_view('nvim')<cr>", "view neovim log" },
+          L = { "<cmd>edit ~/.cache/nvim/lsp.log<cr>", "Open the LSP logfile" },
+          p = {
+            "<cmd>lua require('core.terminal').toggle_log_view('packer.nvim')<cr>",
+            "view packer log",
+          },
+          P = { "<cmd>edit ~/.cache/nvim/packer.nvim.log<cr>", "Open the Packer logfile" },
+        },
       },
-
       s = {
         name = "Search",
         b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
@@ -201,13 +229,7 @@ M.config = function()
 end
 
 M.setup = function()
-  -- if not package.loaded['which-key'] then
-  --  return
-  -- end
-  local status_ok, which_key = pcall(require, "which-key")
-  if not status_ok then
-    return
-  end
+  local which_key = require "which-key"
 
   which_key.setup(lvim.builtin.which_key.setup)
 
@@ -217,10 +239,8 @@ M.setup = function()
   local mappings = lvim.builtin.which_key.mappings
   local vmappings = lvim.builtin.which_key.vmappings
 
-  local wk = require "which-key"
-
-  wk.register(mappings, opts)
-  wk.register(vmappings, vopts)
+  which_key.register(mappings, opts)
+  which_key.register(vmappings, vopts)
 end
 
 return M

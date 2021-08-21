@@ -26,12 +26,28 @@ lvim = {
     gitsigns = {},
     which_key = {},
     comment = {},
-    rooter = {},
-    galaxyline = {},
+    project = {},
+    lualine = {},
     bufferline = {},
     dap = {},
     dashboard = {},
     terminal = {},
+  },
+
+  log = {
+    ---@usage can be { "trace", "debug", "info", "warn", "error", "fatal" },
+    level = "warn",
+    viewer = {
+      ---@usage this will fallback on "less +F" if not found
+      cmd = "lnav",
+      layout_config = {
+        ---@usage direction = 'vertical' | 'horizontal' | 'window' | 'float',
+        direction = "horizontal",
+        open_mapping = "",
+        size = 40,
+        float_opts = {},
+      },
+    },
   },
 
   lsp = {
@@ -83,8 +99,9 @@ lvim = {
     popup_border = "single",
     on_attach_callback = nil,
     on_init_callback = nil,
-    ---@usage query the project directory from the language server and use it to set the CWD
-    smart_cwd = true,
+    null_ls = {
+      setup = {},
+    },
   },
 
   plugins = {
@@ -92,14 +109,9 @@ lvim = {
   },
 
   autocommands = {},
-  debug = false,
 }
 
 local schemas = nil
-local lsp = require "lsp"
-local common_on_attach = lsp.common_on_attach
-local common_capabilities = lsp.common_capabilities()
-local common_on_init = lsp.common_on_init
 local status_ok, jsonls_settings = pcall(require, "nlspsettings.jsonls")
 if status_ok then
   schemas = jsonls_settings.get_default_schemas()
@@ -109,42 +121,39 @@ end
 lvim.lang = {
   asm = {
     formatters = {
-      {
-        -- @usage can be asmfmt
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "asmfmt",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = { provider = "", setup = {} },
   },
   beancount = {
     formatters = {
-      {
-        -- @usage can be bean_format
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "bean_format",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
       provider = "beancount",
       setup = {
         cmd = { "beancount-langserver" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   c = {
     formatters = {
-      {
-        -- @usage can be clang_format or uncrustify
-        exe = "",
-        args = {},
-        stdin = true,
-      },
+      -- {
+      --   exe = "clang_format",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "uncrustify",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -158,20 +167,19 @@ lvim.lang = {
           "--clang-tidy",
           "--clang-tidy-checks=-*,llvm-*,clang-analyzer-*",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   cpp = {
     formatters = {
-      {
-        -- @usage can be clang_format or uncrustify
-        exe = "",
-        args = {},
-        stdin = true,
-      },
+      -- {
+      --   exe = "clang_format",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "uncrustify",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -185,38 +193,34 @@ lvim.lang = {
           "--clang-tidy",
           "--clang-tidy-checks=-*,llvm-*,clang-analyzer-*",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   crystal = {
     formatters = {
-      {
-        -- @usage can be crystal_format
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "crystal_format",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
       provider = "crystalline",
       setup = {
         cmd = { "crystalline" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   cs = {
     formatters = {
-      {
-        -- @usage can be clang_format or uncrustify
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "clang_format ",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "uncrustify",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -228,19 +232,15 @@ lvim.lang = {
           "--hostPID",
           tostring(vim.fn.getpid()),
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   cmake = {
     formatters = {
-      {
-        -- @usage can be cmake_format
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "cmake_format",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -248,37 +248,32 @@ lvim.lang = {
       setup = {
         cmd = {
           DATA_PATH .. "/lspinstall/cmake/venv/bin/cmake-language-server",
-          "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   clojure = {
-    formatters = { { exe = "", args = {} } },
+    formatters = {},
     linters = {},
     lsp = {
       provider = "clojure_lsp",
       setup = {
         cmd = {
           DATA_PATH .. "/lspinstall/clojure/clojure-lsp",
-          "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   css = {
     formatters = {
-      {
-        -- @usage can be prettier or prettierd
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "prettier",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettierd",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -289,19 +284,19 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/css/vscode-css/css-language-features/server/dist/node/cssServerMain.js",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   less = {
     formatters = {
-      {
-        -- @usage can be prettier or prettierd
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "prettier",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettierd",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -312,39 +307,30 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/css/vscode-css/css-language-features/server/dist/node/cssServerMain.js",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   d = {
     formatters = {
-      {
-        -- @usage can be dfmt
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "dfmt",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
       provider = "serve_d",
       setup = {
         cmd = { "serve-d" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   dart = {
     formatters = {
-      {
-        -- @usage can be dart_format
-        exe = "",
-        args = {},
-        stdin = true,
-      },
+      -- {
+      --   exe = "dart_format",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -355,17 +341,11 @@ lvim.lang = {
           "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot",
           "--lsp",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   docker = {
-    formatters = {
-      { exe = "", args = {} },
-      -- @usage can be {"hadolint"}
-    },
+    formatters = {},
     linters = {},
     lsp = {
       provider = "dockerls",
@@ -374,20 +354,15 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/dockerfile/node_modules/.bin/docker-langserver",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   elixir = {
     formatters = {
-      {
-        -- @usage can be mix
-        exe = "",
-        args = {},
-        stdin = true,
-      },
+      -- {
+      --   exe = "mix",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -396,20 +371,15 @@ lvim.lang = {
         cmd = {
           DATA_PATH .. "/lspinstall/elixir/elixir-ls/language_server.sh",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   elm = {
     formatters = {
-      {
-        -- @usage can be elm_format
-        exe = "",
-        args = {},
-        stdin = true,
-      },
+      -- {
+      --   exe = "elm_format",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -418,8 +388,6 @@ lvim.lang = {
         cmd = {
           DATA_PATH .. "/lspinstall/elm/node_modules/.bin/elm-language-server",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
         -- init_options = {
         -- elmAnalyseTrigger = "change",
         -- elmFormatPath = DATA_PATH .. "/lspinstall/elm/node_modules/.bin/elm-format",
@@ -431,40 +399,33 @@ lvim.lang = {
   },
   erlang = {
     formatters = {
-      {
-        -- @usage can be erlfmt
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "erlfmt",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
       provider = "erlangls",
       setup = {
-        cmd = { "erlang_ls" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+        cmd = {
+          "erlang_ls",
+        },
       },
     },
   },
   emmet = { active = false },
   fish = {
     formatters = {
-      {
-        -- @usage can be fish_indent
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "fish_indent",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
       provider = "",
-      setup = {
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
-      },
+      setup = {},
     },
   },
   fortran = {
@@ -473,66 +434,72 @@ lvim.lang = {
     lsp = {
       provider = "fortls",
       setup = {
-        cmd = { DATA_PATH .. "/lspinstall/fortran/venv/bin/fortls" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+        cmd = {
+          DATA_PATH .. "/lspinstall/fortran/venv/bin/fortls",
+        },
       },
     },
   },
   go = {
     formatters = {
-      {
-        -- @usage can be gofmt or goimports or gofumpt
-        exe = "",
-        args = {},
-        stdin = true,
-      },
+      -- {
+      --   exe = "gofmt",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "goimports",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "gofumpt",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
       provider = "gopls",
       setup = {
-        cmd = { DATA_PATH .. "/lspinstall/go/gopls" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+        cmd = {
+          DATA_PATH .. "/lspinstall/go/gopls",
+        },
       },
     },
   },
   graphql = {
-    formatters = { { exe = "", args = {} } },
+    formatters = {},
     linters = {},
     lsp = {
       provider = "graphql",
       setup = {
-        cmd = { "graphql-lsp", "server", "-m", "stream" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+        cmd = {
+          "graphql-lsp",
+          "server",
+          "-m",
+          "stream",
+        },
       },
     },
   },
   haskell = {
-    formatters = { { exe = "", args = {} } },
+    formatters = {},
     linters = {},
     lsp = {
       provider = "hls",
       setup = {
         cmd = { DATA_PATH .. "/lspinstall/haskell/hls" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   html = {
     formatters = {
-      {
-        -- @usage can be prettier or prettierd
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "prettier",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettierd",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -543,39 +510,42 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/html/vscode-html/html-language-features/server/dist/node/htmlServerMain.js",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   java = {
     formatters = {
-      {
-        -- @usage can be clang_format or uncrustify
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "clang_format",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "uncrustify",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
       provider = "jdtls",
       setup = {
         cmd = { DATA_PATH .. "/lspinstall/java/jdtls.sh" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   json = {
     formatters = {
-      {
-        -- @usage can be json_tool or prettier or prettierd
-        exe = "",
-        args = {},
-        stdin = true,
-      },
+      -- {
+      --   exe = "json_tool",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettier",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettierd",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -586,9 +556,6 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/json/vscode-json/json-language-features/server/dist/node/jsonServerMain.js",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
         settings = {
           json = {
             schemas = schemas,
@@ -611,7 +578,7 @@ lvim.lang = {
     },
   },
   julia = {
-    formatters = { { exe = "", args = {} } },
+    formatters = {},
     linters = {},
     lsp = {
       provider = "julials",
@@ -623,14 +590,11 @@ lvim.lang = {
           -- vim.fn.expand "~/.config/nvim/lua/lsp/julia/run.jl",
           CONFIG_PATH .. "/utils/julia/run.jl",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   kotlin = {
-    formatters = { { exe = "", args = {} } },
+    formatters = {},
     linters = {},
     lsp = {
       provider = "kotlin_language_server",
@@ -638,8 +602,6 @@ lvim.lang = {
         cmd = {
           DATA_PATH .. "/lspinstall/kotlin/server/bin/kotlin-language-server",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
         root_dir = function(fname)
           local util = require "lspconfig/util"
 
@@ -676,9 +638,6 @@ lvim.lang = {
           "-E",
           DATA_PATH .. "/lspinstall/lua/main.lua",
         },
-        capabilities = common_capabilities,
-        on_attach = common_on_attach,
-        on_init = common_on_init,
         settings = {
           Lua = {
             runtime = {
@@ -708,44 +667,43 @@ lvim.lang = {
   },
   nginx = {
     formatters = {
-      {
-        -- @usage can be nginx_beautifier
-        exe = "",
-        args = { provider = "", setup = {} },
-      },
+      -- {
+      --   exe = "nginx_beautifier",
+      --   args = {
+      --     provider = "",
+      --     setup = {},
+      --   },
+      -- },
     },
     linters = {},
     lsp = {},
   },
   perl = {
     formatters = {
-      {
-        -- @usage can be perltidy
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "perltidy",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = { provider = "", setup = {} },
   },
   sql = {
     formatters = {
-      {
-        -- @usage can be sqlformat
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "sqlformat",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = { provider = "sqls", setup = { cmd = { "sqls" } } },
   },
   php = {
     formatters = {
-      {
-        -- @usage can be phpcbf
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "phpcbf",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -755,28 +713,39 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/php/node_modules/.bin/intelephense",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
         filetypes = { "php", "phtml" },
         settings = { intelephense = { environment = { phpVersion = "7.4" } } },
       },
     },
   },
   puppet = {
-    formatters = { { exe = "", args = {} } },
+    formatters = {},
     linters = {},
     lsp = {
       provider = "puppet",
       setup = {
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+        cmd = {
+          DATA_PATH .. "/lspinstall/puppet/puppet-editor-services/puppet-languageserver",
+          "--stdio",
+        },
       },
     },
   },
   javascript = {
-    -- @usage can be prettier or prettier_d_slim or prettierd
-    formatters = { { exe = "", args = {} } },
+    formatters = {
+      -- {
+      --   exe = "prettier",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettier_d_slim",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettierd",
+      --   args = {},
+      -- },
+    },
     -- @usage can be {"eslint"} or {"eslint_d"}
     linters = {},
     lsp = {
@@ -787,21 +756,24 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   javascriptreact = {
     formatters = {
-      {
-        -- @usage can be prettier or prettier_d_slim or prettierd
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "prettier",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettier_d_slim",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettierd",
+      --   args = {},
+      -- },
     },
-    -- @usage can be {"eslint"} or {"eslint_d"}
     linters = {},
     lsp = {
       provider = "tsserver",
@@ -811,19 +783,19 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   python = {
     formatters = {
-      {
-        -- @usage can be black or yapf or isort
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "yapf",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "isort",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -833,9 +805,6 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/python/node_modules/.bin/pyright-langserver",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
@@ -843,30 +812,30 @@ lvim.lang = {
   -- R -e 'install.packages("readr",repos = "http://cran.us.r-project.org")'
   r = {
     formatters = {
-      {
-        -- @usage can be format_r
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "format_r",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
       provider = "r_language_server",
       setup = {
-        cmd = { "R", "--slave", "-e", "languageserver::run()" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+        cmd = {
+          "R",
+          "--slave",
+          "-e",
+          "languageserver::run()",
+        },
       },
     },
   },
   ruby = {
     formatters = {
-      {
-        -- @usage can be rufo
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "rufo",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -876,9 +845,6 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/ruby/solargraph/solargraph",
           "stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
         filetypes = { "ruby" },
         init_options = { formatting = true },
         root_dir = function(fname)
@@ -891,48 +857,40 @@ lvim.lang = {
   },
   rust = {
     formatters = {
-      {
-        -- @usage can be rustfmt
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "rustfmt",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
       provider = "rust_analyzer",
       setup = {
-        cmd = { DATA_PATH .. "/lspinstall/rust/rust-analyzer" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+        cmd = {
+          DATA_PATH .. "/lspinstall/rust/rust-analyzer",
+        },
       },
     },
   },
   scala = {
     formatters = {
-      {
-        -- @usage can be scalafmt
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "scalafmt",
+      --   args = {},
+      -- },
     },
     linters = { "" },
     lsp = {
       provider = "metals",
-      setup = {
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
-      },
+      setup = {},
     },
   },
   sh = {
     formatters = {
-      {
-        -- @usage can be shfmt
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "shfmt",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -942,14 +900,11 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/bash/node_modules/.bin/bash-language-server",
           "start",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   svelte = {
-    formatters = { { exe = "", args = {} } },
+    formatters = {},
     linters = {},
     lsp = {
       provider = "svelte",
@@ -958,28 +913,24 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/svelte/node_modules/.bin/svelteserver",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   swift = {
     formatters = {
-      {
-        -- @usage can be swiftformat
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "swiftformat",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
       provider = "sourcekit",
       setup = {
-        cmd = { "xcrun", "sourcekit-lsp" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+        cmd = {
+          "xcrun",
+          "sourcekit-lsp",
+        },
       },
     },
   },
@@ -997,11 +948,10 @@ lvim.lang = {
   },
   terraform = {
     formatters = {
-      {
-        -- @usage can be terraform_fmt
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "terraform_fmt",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -1011,36 +961,33 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/terraform/terraform-ls",
           "serve",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   tex = {
-    formatters = {
-      { exe = "", args = {}, stdin = false },
-      -- @usage can be chktex or vale
-    },
+    formatters = {},
     linters = {},
     lsp = {
       provider = "texlab",
       setup = {
         cmd = { DATA_PATH .. "/lspinstall/latex/texlab" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   typescript = {
     formatters = {
-      {
-        -- @usage can be prettier or prettierd or prettier_d_slim
-        exe = "",
-        args = {},
-      },
-      -- @usage can be {"eslint"} or {"eslint_d"}
+      -- {
+      --   exe = "prettier",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettierd",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettier_d_slim",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -1051,19 +998,23 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   typescriptreact = {
     formatters = {
-      {
-        -- @usage can be prettier or prettierd or prettier_d_slim
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "prettier",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettierd",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettier_d_slim",
+      --   args = {},
+      -- },
     },
     -- @usage can be {"eslint"} or {"eslint_d"}
     linters = {},
@@ -1075,16 +1026,12 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   vim = {
-    formatters = { { exe = "", args = {} } },
-    -- @usage can be {"vint"}
-    linters = { "" },
+    formatters = {},
+    linters = {},
     lsp = {
       provider = "vimls",
       setup = {
@@ -1092,39 +1039,44 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/vim/node_modules/.bin/vim-language-server",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   vue = {
     formatters = {
-      {
-        -- @usage can be prettier or prettierd or prettier_d_slim
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "prettier",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettierd",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettier_d_slim",
+      --   args = {},
+      -- },
     },
-    -- @usage can be {"eslint"} or {"eslint_d"}
     linters = {},
     lsp = {
       provider = "vuels",
       setup = {
-        cmd = { DATA_PATH .. "/lspinstall/vue/node_modules/.bin/vls" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+        cmd = {
+          DATA_PATH .. "/lspinstall/vue/node_modules/.bin/vls",
+        },
       },
     },
   },
   yaml = {
     formatters = {
-      {
-        -- @usage can be prettier or prettierd
-        exe = "",
-        args = {},
-      },
+      -- {
+      --   exe = "prettier",
+      --   args = {},
+      -- },
+      -- {
+      --   exe = "prettierd",
+      --   args = {},
+      -- },
     },
     linters = {},
     lsp = {
@@ -1134,22 +1086,18 @@ lvim.lang = {
           DATA_PATH .. "/lspinstall/yaml/node_modules/.bin/yaml-language-server",
           "--stdio",
         },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
       },
     },
   },
   zig = {
-    formatters = { { exe = "", args = {}, stdin = false } },
+    formatters = {},
     linters = {},
     lsp = {
       provider = "zls",
       setup = {
-        cmd = { "zls" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+        cmd = {
+          "zls",
+        },
       },
     },
   },
@@ -1159,10 +1107,11 @@ lvim.lang = {
     lsp = {
       provider = "gdscript",
       setup = {
-        cmd = { "nc", "localhost", "6008" },
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+        cmd = {
+          "nc",
+          "localhost",
+          "6008",
+        },
       },
     },
   },
@@ -1173,9 +1122,28 @@ lvim.lang = {
       provider = "powershell_es",
       setup = {
         bundle_path = "",
-        on_attach = common_on_attach,
-        on_init = common_on_init,
-        capabilities = common_capabilities,
+      },
+    },
+  },
+  nix = {
+    formatters = {
+      -- {
+      --   exe = "nixfmt",
+      --   args = {},
+      -- },
+    },
+    linters = {},
+    lsp = {
+      provider = "rnix",
+      setup = {
+        cmd = { "rnix-lsp" },
+        filetypes = { "nix" },
+        init_options = {},
+        settings = {},
+        root_dir = function(fname)
+          local util = require "lspconfig/util"
+          return util.root_pattern ".git"(fname) or vim.fn.getcwd()
+        end,
       },
     },
   },
@@ -1183,7 +1151,6 @@ lvim.lang = {
 
 require("keymappings").config()
 require("core.which-key").config()
-require "core.status_colors"
 require("core.gitsigns").config()
 require("core.compe").config()
 require("core.dashboard").config()
@@ -1192,5 +1159,8 @@ require("core.terminal").config()
 require("core.telescope").config()
 require("core.treesitter").config()
 require("core.nvimtree").config()
-require("core.rooter").config()
+require("core.project").config()
 require("core.bufferline").config()
+require("core.autopairs").config()
+require("core.comment").config()
+require("core.lualine").config()

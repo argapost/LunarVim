@@ -1,5 +1,5 @@
 local M = {}
-local u = require "utils"
+local Log = require "core.log"
 
 function M.config()
   vim.lsp.protocol.CompletionItemKind = lvim.lsp.completion.item_kind
@@ -34,7 +34,11 @@ local function lsp_highlight_document(client)
 end
 
 local function add_lsp_buffer_keybindings(bufnr)
-  local wk = require "which-key"
+  local status_ok, wk = pcall(require, "which-key")
+  if not status_ok then
+    return
+  end
+
   local keys = {
     ["K"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show hover" },
     ["gd"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto Definition" },
@@ -85,9 +89,7 @@ function M.get_ls_capabilities(client_id)
 
   for k, v in pairs(client.resolved_capabilities) do
     if v == true then
-      -- print("got cap: ", vim.inspect(caps))
       table.insert(enabled_caps, k)
-      -- vim.list_extend(enabled_caps, cap)
     end
   end
 
@@ -97,45 +99,58 @@ end
 function M.common_on_init(client, bufnr)
   if lvim.lsp.on_init_callback then
     lvim.lsp.on_init_callback(client, bufnr)
+    Log:get_default().info "Called lsp.on_init_callback"
     return
   end
 
   local formatters = lvim.lang[vim.bo.filetype].formatters
   if not vim.tbl_isempty(formatters) and formatters[1]["exe"] ~= nil and formatters[1].exe ~= "" then
     client.resolved_capabilities.document_formatting = false
-    u.lvim_log(string.format("Overriding [%s] formatter with [%s]", client.name, formatters[1].exe))
+    Log:get_default().info(
+      string.format("Overriding language server [%s] with format provider [%s]", client.name, formatters[1].exe)
+    )
   end
 end
 
 function M.common_on_attach(client, bufnr)
   if lvim.lsp.on_attach_callback then
     lvim.lsp.on_attach_callback(client, bufnr)
+    Log:get_default().info "Called lsp.on_init_callback"
   end
   lsp_highlight_document(client)
   add_lsp_buffer_keybindings(bufnr)
-  if lvim.lsp.smart_cwd then
-    vim.api.nvim_set_current_dir(client.config.root_dir)
-    require("core.nvimtree").change_tree_dir(client.config.root_dir)
-  end
   require("lsp.null-ls").setup(vim.bo.filetype)
 end
 
 function M.setup(lang)
+  local lsp_utils = require "lsp.utils"
   local lsp = lvim.lang[lang].lsp
-  if require("utils").check_lsp_client_active(lsp.provider) then
+  if lsp_utils.is_client_active(lsp.provider) then
     return
   end
 
   local overrides = lvim.lsp.override
-
   if type(overrides) == "table" then
     if vim.tbl_contains(overrides, lang) then
       return
     end
   end
 
-  local lspconfig = require "lspconfig"
-  lspconfig[lsp.provider].setup(lsp.setup)
+  if lsp.provider ~= nil and lsp.provider ~= "" then
+    local lspconfig = require "lspconfig"
+
+    if not lsp.setup.on_attach then
+      lsp.setup.on_attach = M.common_on_attach
+    end
+    if not lsp.setup.on_init then
+      lsp.setup.on_init = M.common_on_init
+    end
+    if not lsp.setup.capabilities then
+      lsp.setup.capabilities = M.common_capabilities()
+    end
+
+    lspconfig[lsp.provider].setup(lsp.setup)
+  end
 end
 
 return M
