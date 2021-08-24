@@ -58,6 +58,13 @@ M.load_options = function()
   g.loaded_python_provider = 0
   g.python3_host_prog = "/usr/bin/python3"
 
+  -- vimtex
+  g.tex_flavor = "latex"
+  g.vimtex_view_method = "zathura"
+  g.vimtex_quickfix_mode = 0
+  g.vimtex_fold_manual = true
+  g.vimtex_fold_automatic = false
+
   for k, v in pairs(default_options) do
     vim.opt[k] = v
   end
