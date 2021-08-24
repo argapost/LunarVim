@@ -28,12 +28,12 @@ M.load_options = function()
     splitright = true, -- force all vertical splits to go to the right of current window
     swapfile = false, -- creates a swapfile
     termguicolors = true, -- set term gui colors (most terminals support this)
-    timeoutlen = 100, -- time to wait for a mapped sequence to complete (in milliseconds)
+    timeoutlen = 200, -- time to wait for a mapped sequence to complete (in milliseconds)
     title = true, -- set the title of window to the value of the titlestring
     -- opt.titlestring = "%<%F%=%l/%L - nvim" -- what the title of the window will be set to
     undodir = CACHE_PATH .. "/undo", -- set an undo directory
     undofile = true, -- enable persistent undo
-    updatetime = 300, -- faster completion
+    updatetime = 250, -- faster completion
     writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
     expandtab = true, -- convert tabs to spaces
     shiftwidth = 2, -- the number of spaces inserted for each indentation
