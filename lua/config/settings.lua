@@ -25,19 +25,19 @@ M.load_options = function()
     splitright = true, -- force all vertical splits to go to the right of current window
     swapfile = false, -- creates a swapfile
     termguicolors = true, -- set term gui colors (most terminals support this)
-    timeoutlen = 100, -- time to wait for a mapped sequence to complete (in milliseconds)
+    timeoutlen = 200, -- time to wait for a mapped sequence to complete (in milliseconds)
     title = true, -- set the title of window to the value of the titlestring
     -- opt.titlestring = "%<%F%=%l/%L - nvim" -- what the title of the window will be set to
     undodir = CACHE_PATH .. "/undo", -- set an undo directory
-    undofile = true, -- enable persistent undo
-    updatetime = 300, -- faster completion
+    undofile = false, -- enable persistent undo
+    updatetime = 250, -- faster completion
     writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
     expandtab = true, -- convert tabs to spaces
     shiftwidth = 2, -- the number of spaces inserted for each indentation
     tabstop = 2, -- insert 2 spaces for a tab
     cursorline = true, -- highlight the current line
     number = true, -- set numbered lines
-    relativenumber = false, -- set relative numbered lines
+    relativenumber = true, -- set relative numbered lines
     numberwidth = 4, -- set number column width to 2 {default 4}
     signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
     wrap = false, -- display lines as one long line
@@ -50,6 +50,10 @@ M.load_options = function()
   ---  SETTINGS  ---
 
   vim.opt.shortmess:append "c"
+  vim.g.python_host_skip_check = 1
+  vim.g.python3_host_skip_check = 1
+  vim.g.loaded_python_provider = 0
+  vim.g.python3_host_prog = "/usr/bin/python3"
 
   for k, v in pairs(default_options) do
     vim.opt[k] = v
