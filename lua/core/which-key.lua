@@ -36,7 +36,8 @@ M.config = function()
       layout = {
         height = { min = 4, max = 20 }, -- min and max height of the columns
         width = { min = 20, max = 40 }, -- min and max width of the columns
-        spacing = 12, -- spacing between columns
+        spacing = 10, -- spacing between columns
+        align = "center"
       },
       hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
       show_help = true, -- show help message on the command line when the popup is visible
