@@ -189,8 +189,4 @@ return {
     end,
     disable = not lvim.builtin.terminal.active,
   },
-
-  -- Startup Time
-  { "dstein64/vim-startuptime" },
-
 }
