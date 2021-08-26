@@ -954,6 +954,23 @@ lvim.lang = {
       provider = "texlab",
       setup = {
         cmd = { DATA_PATH .. "/lspinstall/latex/texlab" },
+        settings = {
+          texlab = {
+            rootDirectory = nil,
+            build = {
+              executable = "latexmk",
+              args = { "-xelatex", "-interaction=nonstopmode", "-synctex=1", "-file-line-error", "%f" },
+              forwardSearchAfter = false,
+              onSave = true,
+              outputDirectory = "./out",
+            },
+            forwardSearch = {
+              executable = "zathura",
+              args = { "--synctex-forward", "%l:1:%f", "%p" },
+              onSave = false,
+            },
+          },
+        },
       },
     },
   },
