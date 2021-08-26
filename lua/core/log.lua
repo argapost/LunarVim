@@ -46,7 +46,7 @@ function Log:debug(msg)
 end
 
 function Log:info(msg)
-  self:add_entry(msg, "INFO")
+  -- self:add_entry(msg, "INFO")
 end
 
 function Log:warn(msg)
