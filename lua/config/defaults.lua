@@ -924,7 +924,7 @@ lvim.lang = {
       provider = "tailwindcss",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/tailwindcss/tailwindcss-intellisense.sh",
+          DATA_PATH .. "/lspinstall/tailwindcss/node_modules/.bin/tailwindcss-language-server",
           "--stdio",
         },
       },
