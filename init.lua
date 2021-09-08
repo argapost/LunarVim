@@ -53,10 +53,3 @@ end
 
 require("keymappings").setup()
 vim.cmd("source " .. CONFIG_PATH .. "/vimscript/folds.vim")
-
--- TODO: these guys need to be in language files
--- if lvim.lang.emmet.active then
---   require "lsp.emmet-ls"
--- end
--- if lvim.lang.tailwindcss.active then
---   require "lsp.tailwind
