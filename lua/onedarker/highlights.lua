@@ -19,7 +19,7 @@ local highlights = {
   LineNr = { fg = C.context },
   FloatBoder = { fg = C.gray, bg = C.alt_bg },
   Whitespace = { fg = C.bg },
-  VertSplit = { fg = C.bg, bg = C.fg },
+  VertSplit = { fg = C.bg, bg = "NONE", style="NONE" },
   CursorLine = { bg = C.dark },
   CursorColumn = { bg = C.dark },
   ColorColumn = { bg = C.dark },
@@ -94,6 +94,7 @@ local highlights = {
   TabLine = { fg = C.light_gray, bg = C.alt_bg },
   TabLineSel = { fg = C.fg, bg = C.alt_bg },
   TabLineFill = { fg = C.fg, bg = C.alt_bg },
+  TabLineFill = { fg = C.white, bg = C.alt_bg_t },
 }
 
 return highlights
