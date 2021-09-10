@@ -887,7 +887,7 @@ lvim.lang = {
       --   args = {},
       -- },
     },
-    linters = { "" },
+    linters = {},
     lsp = {
       provider = "metals",
       setup = {},
