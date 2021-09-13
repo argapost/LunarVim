@@ -29,7 +29,7 @@ M.load_options = function()
     title = true, -- set the title of window to the value of the titlestring
     -- opt.titlestring = "%<%F%=%l/%L - nvim" -- what the title of the window will be set to
     undodir = utils.join_paths(get_cache_dir(), "undo"), -- set an undo directory
-    undofile = true, -- enable persistent undo
+    undofile = false, -- enable persistent undo
     updatetime = 250, -- faster completion
     writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
     expandtab = true, -- convert tabs to spaces
