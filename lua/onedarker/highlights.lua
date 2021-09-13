@@ -20,7 +20,7 @@ local highlights = {
   FloatBoder = { fg = C.gray, bg = "NONE" },
   Whitespace = { fg = C.bg },
   VertSplit = { fg = C.bg, bg = "NONE", style="NONE" },
-  CursorLine = { bg = C.dark },
+  CursorLine = { bg = "NONE" },
   CursorColumn = { bg = C.dark },
   ColorColumn = { bg = C.dark },
   NormalFloat = { bg = "NONE" },
