@@ -82,3 +82,6 @@ nmap gcc <Plug>VSCodeCommentaryLine
 " Simulate same TAB behavior in VSCode
 nmap <Tab> :Tabnext<CR>
 nmap <S-Tab> :Tabprev<CR>
+
+highlight QuickScopePrimary guifg='#ff007c' gui=underline ctermfg=155 cterm=underline
+highlight QuickScopeSecondary guifg='#00dfff' gui=underline ctermfg=81 cterm=underline
