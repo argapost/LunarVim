@@ -23,5 +23,5 @@ require("lvim.keymappings").setup()
 
 require("lvim.lsp").setup()
 
-local utils = require "utils"
+local utils = require "lvim.utils"
 vim.cmd("source " .. utils.join_paths(get_runtime_dir(), "lvim") .. "/vimscript/folds.vim")
