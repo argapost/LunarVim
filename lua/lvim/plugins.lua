@@ -96,10 +96,8 @@ return {
   },
 
   -- Whichkey
-  -- TODO: change back to folke/which-key.nvim after folke got back
   {
-    "abzcoding/which-key.nvim",
-    branch = "fix/neovim-6-position",
+    "folke/which-key.nvim",
     config = function()
       require("lvim.core.which-key").setup()
     end,
@@ -132,7 +130,7 @@ return {
   -- Status Line and Bufferline
   {
     -- "hoob3rt/lualine.nvim",
-    "shadmansaleh/lualine.nvim",
+    "nvim-lualine/lualine.nvim",
     -- "Lunarvim/lualine.nvim",
     config = function()
       require("lvim.core.lualine").setup()
