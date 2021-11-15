@@ -55,6 +55,8 @@ M.load_options = function()
   vim.g.loaded_python_provider = 0
   vim.g.python3_host_prog = "/usr/bin/python3"
 
+  vim.opt.shadafile = utils.join_paths(get_cache_dir(), "lvim.shada")
+
   for k, v in pairs(default_options) do
     vim.opt[k] = v
   end
