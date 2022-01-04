@@ -8,12 +8,7 @@ end
 
 vim.cmd [[set runtimepath=$VIMRUNTIME]]
 
-local temp_dir
-if on_windows then
-  temp_dir = vim.loop.os_getenv "TEMP"
-else
-  temp_dir = "/tmp"
-end
+local temp_dir = vim.loop.os_getenv "TEMP" or "/tmp"
 
 vim.cmd("set packpath=" .. join_paths(temp_dir, "nvim", "site"))
 
@@ -46,9 +41,7 @@ end
 
 _G.load_config = function()
   vim.lsp.set_log_level "trace"
-  if vim.fn.has "nvim-0.5.1" == 1 then
-    require("vim.lsp.log").set_format_func(vim.inspect)
-  end
+  require("vim.lsp.log").set_format_func(vim.inspect)
   local nvim_lsp = require "lspconfig"
   local on_attach = function(_, bufnr)
     local function buf_set_keymap(...)
