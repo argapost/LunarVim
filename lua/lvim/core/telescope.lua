@@ -1,6 +1,7 @@
 local M = {}
 
 function M.config()
+  local fb_actions = require "telescope".extensions.file_browser.actions
   -- Define this minimal config so that it's available if telescope is not yet available.
 
   lvim.builtin.telescope = {
@@ -79,6 +80,17 @@ function M.config()
         override_file_sorter = true, -- override the file sorter
         case_mode = "smart_case", -- or "ignore_case" or "respect_case"
       },
+      file_browser = {
+        mappings = {
+          ["i"] = {
+            -- your custom insert mode mappings
+            ["<C-c>"] = fb_actions.create
+          },
+          ["n"] = {
+            -- your custom normal mode mappings
+          },
+        },
+      },
     },
   })
 end
@@ -151,6 +163,7 @@ function M.setup()
   if lvim.builtin.telescope.extensions and lvim.builtin.telescope.extensions.fzf then
     require("telescope").load_extension "fzf"
   end
+  require("telescope").load_extension "file_browser"
 end
 
 return M
