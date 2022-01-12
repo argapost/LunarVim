@@ -66,7 +66,7 @@ return {
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
-    commit = commit.telescope,
+    -- commit = commit.telescope,
     config = function()
       require("lvim.core.telescope").setup()
     end,
