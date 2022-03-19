@@ -55,6 +55,7 @@ return {
     "argapost/onedarker.nvim",
     config = function()
       require("onedarker").setup()
+      lvim.builtin.lualine.options.theme = "onedarker"
     end,
     disable = lvim.colorscheme ~= "onedarker",
   },
