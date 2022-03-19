@@ -52,7 +52,7 @@ return {
     commit = commit.nvim_lsp_installer,
   },
   {
-    "lunarvim/onedarker.nvim",
+    "argapost/onedarker.nvim",
     config = function()
       require("onedarker").setup()
     end,
