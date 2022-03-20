@@ -58,7 +58,7 @@ return {
       require("onedarker").setup()
       lvim.builtin.lualine.options.theme = "onedarker"
     end,
-    commit = commit.onedarker,
+    -- commit = commit.onedarker,
     disable = lvim.colorscheme ~= "onedarker",
   },
   {
