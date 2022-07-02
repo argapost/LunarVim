@@ -77,9 +77,6 @@
   "nvim-web-devicons": {
     "commit": "8d2c533"
   },
-  "onedarker.nvim": {
-    "commit": "b00dd21"
-  },
   "packer.nvim": {
     "commit": "00ec5ad"
   },
