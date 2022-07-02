@@ -11,7 +11,7 @@ local core_plugins = {
     "williamboman/nvim-lsp-installer",
   },
   {
-    "lunarvim/onedarker.nvim",
+    "argapost/onedarker.nvim",
     config = function()
       pcall(function()
         if lvim and lvim.colorscheme == "onedarker" then
@@ -20,6 +20,7 @@ local core_plugins = {
         end
       end)
     end,
+    -- commit = commit.onedarker,
     disable = lvim.colorscheme ~= "onedarker",
   },
   {
