@@ -88,12 +88,11 @@ M.add_exec = function(opts)
     term_mode = { [opts.keymap] = exec_func },
   }
 
-  local wk_status_ok, wk = pcall(require, "whichkey")
+  local wk_status_ok, wk = pcall(require, "which-key")
   if not wk_status_ok then
     return
   end
   wk.register({ [opts.keymap] = { opts.label } }, { mode = "n" })
-  wk.register({ [opts.keymap] = { opts.label } }, { mode = "t" })
 end
 
 M._exec_toggle = function(opts)
@@ -109,6 +108,7 @@ M.toggle_log_view = function(logfile)
   if vim.fn.executable(log_viewer) ~= 1 then
     log_viewer = "less +F"
   end
+  Log:debug("attempting to open: " .. logfile)
   log_viewer = log_viewer .. " " .. logfile
   local term_opts = vim.tbl_deep_extend("force", lvim.builtin.terminal, {
     cmd = log_viewer,

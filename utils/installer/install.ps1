@@ -82,7 +82,7 @@ function print_missing_dep_msg($dep) {
     Write-Output "Please install it first and re-run the installer."
 }
 
-$winget_package_matrix=@{"git" = "Git.Git"; "nvim" = "nvim.nvim"; "make" = "GnuWin32.Make"; "node" = "OpenJS.NodeJS"; "pip" = "Python.Python.3"}
+$winget_package_matrix=@{"git" = "Git.Git"; "nvim" = "Neovim.Neovim"; "make" = "GnuWin32.Make"; "node" = "OpenJS.NodeJS"; "pip" = "Python.Python.3"}
 $scoop_package_matrix=@{"git" = "git"; "nvim" = "neovim-nightly"; "make" = "make"; "node" = "nodejs"; "pip" = "python3"}
 
 function install_system_package($dep) {
@@ -262,12 +262,12 @@ function create_alias {
     $lvim_bin="$INSTALL_PREFIX\bin\lvim.ps1"
     $lvim_alias = Get-Alias lvim -ErrorAction SilentlyContinue
 
-    if ($lvim_alias.Definition == $lvim_bin) {
+    if ($lvim_alias.Definition -eq $lvim_bin) {
         Write-Output "Alias is already set and will not be reset."
         return
     }
 
-    Add-Content -Path $PROFILE -Value $("Set-Alias lvim $lvim_bin")
+    Add-Content -Path $PROFILE -Value $("`r`nSet-Alias lvim $lvim_bin")
 
     Write-Host 'To use the new alias in this window reload your profile with: `. $PROFILE`' -ForegroundColor Green
 }
