@@ -7,8 +7,12 @@ local core_plugins = {
     "jose-elias-alvarez/null-ls.nvim",
   },
   { "antoinemadec/FixCursorHold.nvim" }, -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
+  { "williamboman/mason-lspconfig.nvim" },
   {
-    "williamboman/nvim-lsp-installer",
+    "williamboman/mason.nvim",
+    config = function()
+      require("lvim.core.mason").setup()
+    end,
   },
   {
     "argapost/onedarker.nvim",
@@ -38,6 +42,7 @@ local core_plugins = {
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
     config = function()
       require("lvim.core.telescope").setup()
     end,

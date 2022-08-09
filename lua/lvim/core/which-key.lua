@@ -1,5 +1,4 @@
 local M = {}
-
 M.config = function()
   lvim.builtin.which_key = {
     ---@usage disable which-key completely [not recommended]
@@ -91,6 +90,7 @@ M.config = function()
         j = { "<cmd>BufferLinePick<cr>", "Jump" },
         f = { "<cmd>Telescope buffers<cr>", "Find" },
         b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
+        n = { "<cmd>BufferLineCycleNext<cr>", "Next" },
         -- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
         e = {
           "<cmd>BufferLinePickClose<cr>",
@@ -159,7 +159,7 @@ M.config = function()
         w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
         f = { require("lvim.lsp.utils").format, "Format" },
         i = { "<cmd>LspInfo<cr>", "Info" },
-        I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
+        I = { "<cmd>Mason<cr>", "Mason Info" },
         j = {
           vim.diagnostic.goto_next,
           "Next Diagnostic",
@@ -251,7 +251,7 @@ M.config = function()
         k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
         C = { "<cmd>Telescope commands<cr>", "Commands" },
         p = {
-          "<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
+          "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
           "Colorscheme with Preview",
         },
       },
