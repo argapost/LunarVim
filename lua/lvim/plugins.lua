@@ -276,20 +276,6 @@ local core_plugins = {
     end,
     disable = not lvim.builtin.indentlines.active,
   },
-
-  {
-    "lunarvim/onedarker.nvim",
-    branch = "freeze",
-    config = function()
-      pcall(function()
-        if lvim and lvim.colorscheme == "onedarker" then
-          require("onedarker").setup()
-          lvim.builtin.lualine.options.theme = "onedarker"
-        end
-      end)
-    end,
-    disable = lvim.colorscheme ~= "onedarker",
-  },
 }
 
 local default_snapshot_path = join_paths(get_lvim_base_dir(), "snapshots", "default.json")
