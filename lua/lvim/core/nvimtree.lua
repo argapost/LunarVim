@@ -42,7 +42,6 @@ function M.config()
       },
       view = {
         width = 30,
-        height = 30,
         hide_root_folder = false,
         side = "left",
         mappings = {
@@ -146,6 +145,24 @@ function M.setup()
     Log:error "Failed to load nvim-tree"
     return
   end
+
+  local status_ok_1, utils = pcall(require, "nvim-tree.utils")
+  if not status_ok_1 then
+    return
+  end
+
+  local function notify_level()
+    return function(msg)
+      vim.schedule(function()
+        vim.api.nvim_echo({ { msg, "WarningMsg" } }, false, {})
+      end)
+    end
+  end
+
+  utils.notify.warn = notify_level(vim.log.levels.WARN)
+  utils.notify.error = notify_level(vim.log.levels.ERROR)
+  utils.notify.info = notify_level(vim.log.levels.INFO)
+  utils.notify.debug = notify_level(vim.log.levels.DEBUG)
 
   if lvim.builtin.nvimtree._setup_called then
     Log:debug "ignoring repeated setup call for nvim-tree, see kyazdani42/nvim-tree.lua#1308"

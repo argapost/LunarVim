@@ -12,10 +12,34 @@ local function diff_source()
   end
 end
 
+local statusline_hl = vim.api.nvim_get_hl_by_name("StatusLine", true)
+local cursorline_hl = vim.api.nvim_get_hl_by_name("CursorLine", true)
+local normal_hl = vim.api.nvim_get_hl_by_name("Normal", true)
+
+vim.api.nvim_set_hl(0, "SLGitIcon", { fg = "#E8AB53", bg = cursorline_hl.background })
+vim.api.nvim_set_hl(0, "SLBranchName", { fg = normal_hl.foreground, bg = cursorline_hl.background })
+vim.api.nvim_set_hl(0, "SLProgress", { fg = "#ECBE7B", bg = statusline_hl.background })
+
+local location_color = nil
+local branch = ""
+local separator = "│"
+
+if lvim.colorscheme == "tokyonight" then
+  location_color = "SLBranchName"
+  branch = "%#SLGitIcon#" .. "" .. "%*" .. "%#SLBranchName#"
+
+  local status_ok, tnc = pcall(require, "tokyonight.colors")
+  if status_ok then
+    local tncolors = tnc.setup { transform = true }
+    vim.api.nvim_set_hl(0, "SLSeparator", { fg = cursorline_hl.background, bg = tncolors.black })
+    separator = "%#SLSeparator#" .. "│" .. "%*"
+  end
+end
+
 return {
   mode = {
     function()
-      return " "
+      return "  "
     end,
     padding = { left = 0, right = 0 },
     color = {},
@@ -23,9 +47,8 @@ return {
   },
   branch = {
     "b:gitsigns_head",
-    icon = " ",
+    icon = branch,
     color = { gui = "bold" },
-    cond = conditions.hide_in_width,
   },
   filename = {
     "filename",
@@ -35,7 +58,8 @@ return {
   diff = {
     "diff",
     source = diff_source,
-    symbols = { added = "  ", modified = " ", removed = " " },
+    symbols = { added = " ", modified = " ", removed = " " },
+    padding = { left = 2, right = 1 },
     diff_color = {
       added = { fg = colors.green },
       modified = { fg = colors.yellow },
@@ -61,7 +85,7 @@ return {
     "diagnostics",
     sources = { "nvim_diagnostic" },
     symbols = { error = " ", warn = " ", info = " ", hint = " " },
-    cond = conditions.hide_in_width,
+    -- cond = conditions.hide_in_width,
   },
   treesitter = {
     function()
@@ -108,24 +132,26 @@ return {
       local unique_client_names = vim.fn.uniq(buf_client_names)
       return "[" .. table.concat(unique_client_names, ", ") .. "]"
     end,
+    separator = separator,
     color = { gui = "bold" },
     cond = conditions.hide_in_width,
   },
-  location = { "location", cond = conditions.hide_in_width, color = {} },
-  progress = { "progress", cond = conditions.hide_in_width, color = {} },
+  location = { "location", color = location_color },
+  progress = {
+    "progress",
+    fmt = function()
+      return "%P/%L"
+    end,
+    color = {},
+  },
+
   spaces = {
     function()
-      if not vim.api.nvim_buf_get_option(0, "expandtab") then
-        return "Tab size: " .. vim.api.nvim_buf_get_option(0, "tabstop") .. " "
-      end
-      local size = vim.api.nvim_buf_get_option(0, "shiftwidth")
-      if size == 0 then
-        size = vim.api.nvim_buf_get_option(0, "tabstop")
-      end
-      return "Spaces: " .. size .. " "
+      local shiftwidth = vim.api.nvim_buf_get_option(0, "shiftwidth")
+      return " " .. shiftwidth
     end,
-    cond = conditions.hide_in_width,
-    color = {},
+    separator = separator,
+    padding = 1,
   },
   encoding = {
     "o:encoding",
@@ -133,7 +159,7 @@ return {
     color = {},
     cond = conditions.hide_in_width,
   },
-  filetype = { "filetype", cond = conditions.hide_in_width },
+  filetype = { "filetype", cond = nil, padding = { left = 1, right = 1 } },
   scrollbar = {
     function()
       local current_line = vim.fn.line "."
@@ -144,7 +170,7 @@ return {
       return chars[index]
     end,
     padding = { left = 0, right = 0 },
-    color = { fg = colors.yellow, bg = colors.bg },
+    color = "SLProgress",
     cond = nil,
   },
 }

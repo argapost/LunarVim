@@ -17,12 +17,7 @@ local core_plugins = {
   {
     "argapost/onedarker.nvim",
     config = function()
-      pcall(function()
-        if lvim and lvim.colorscheme == "onedarker" then
-          require("onedarker").setup()
-          lvim.builtin.lualine.options.theme = "onedarker"
-        end
-      end)
+      require("lvim.core.theme").setup()
     end,
     -- commit = commit.onedarker,
     disable = lvim.colorscheme ~= "onedarker",
@@ -203,6 +198,15 @@ local core_plugins = {
     disable = not lvim.builtin.lualine.active,
   },
 
+  -- breadcrumbs
+  {
+    "SmiteshP/nvim-navic",
+    config = function()
+      require("lvim.core.breadcrumbs").setup()
+    end,
+    disable = not lvim.builtin.breadcrumbs.active,
+  },
+
   {
     "akinsho/bufferline.nvim",
     config = function()
@@ -259,6 +263,32 @@ local core_plugins = {
 
   {
     "RRethy/vim-illuminate",
+    config = function()
+      require("lvim.core.illuminate").setup()
+    end,
+    disable = not lvim.builtin.illuminate.active,
+  },
+
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("lvim.core.indentlines").setup()
+    end,
+    disable = not lvim.builtin.indentlines.active,
+  },
+
+  {
+    "lunarvim/onedarker.nvim",
+    branch = "freeze",
+    config = function()
+      pcall(function()
+        if lvim and lvim.colorscheme == "onedarker" then
+          require("onedarker").setup()
+          lvim.builtin.lualine.options.theme = "onedarker"
+        end
+      end)
+    end,
+    disable = lvim.colorscheme ~= "onedarker",
   },
 }
 

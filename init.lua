@@ -22,3 +22,5 @@ require("lvim.lsp").setup()
 
 local utils = require "lvim.utils"
 vim.cmd("source " .. utils.join_paths(get_runtime_dir(), "lvim") .. "/vimscript/folds.vim")
+
+vim.opt.laststatus = 3

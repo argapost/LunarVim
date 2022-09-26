@@ -33,10 +33,31 @@ function M.load_defaults()
   })
 
   vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = {
+      "alpha",
+    },
+    callback = function()
+      vim.cmd [[
+      nnoremap <silent> <buffer> q :qa<CR>
+      nnoremap <silent> <buffer> <esc> :qa<CR>
+      set nobuflisted
+    ]]
+    end,
+  })
+
+  vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = { "lir" },
     callback = function()
       vim.opt_local.number = false
       vim.opt_local.relativenumber = false
+    end,
+  })
+
+  -- TODO: figure out what keeps overriding laststatus
+  vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+    pattern = { "*" },
+    callback = function()
+      vim.opt.laststatus = 3
     end,
   })
 

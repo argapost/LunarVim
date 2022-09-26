@@ -1,6 +1,6 @@
 local M = {}
 
-local Log = require "lvim.core.log"
+-- local Log = require "lvim.core.log"
 
 M.config = function()
   lvim.builtin.lir = {
@@ -97,7 +97,7 @@ end
 
 function M.setup()
   if lvim.builtin.nvimtree.active then
-    Log:warn "Unable to configure lir while nvimtree is active! Please set 'lvim.builtin.nvimtree.active=false'"
+    -- Log:warn "Unable to configure lir while nvimtree is active! Please set 'lvim.builtin.nvimtree.active=false'"
     return
   end
 

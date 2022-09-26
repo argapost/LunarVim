@@ -68,6 +68,9 @@
   "nvim-lspconfig": {
     "commit": "f8b3c24"
   },
+  "nvim-navic": {
+    "commit": "202312e"
+  },
   "nvim-notify": {
     "commit": "7076ce8"
   },
@@ -110,10 +113,16 @@
   "toggleterm.nvim": {
     "commit": "5e393e5"
   },
-  "which-key.nvim": {
-    "commit": "d5f0c63"
+  "tokyonight.nvim": {
+    "commit": "e0bdba5"
   },
   "vim-illuminate": {
     "commit": "b545262"
+  },
+  "which-key.nvim": {
+    "commit": "d5f0c63"
+  },
+  "indent-blankline.nvim": {
+    "commit": "db7cbcb"
   }
 }
